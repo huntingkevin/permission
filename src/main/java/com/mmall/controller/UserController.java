@@ -46,7 +46,7 @@ public class UserController {
             errorMsg = "cannot find the user.";
         } else if (!sysUser.getPassword().equals(MD5Util.encrypt(password))) {
             errorMsg = "username or password invalid.";
-        } else if (sysUser.getStatus().equals("1")) {
+        } else if (sysUser.getStatus().equals("0")) {
             errorMsg = "用户被冻结，请联系管理员";
         } else {
             // login success

@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <title>Admin</title>
     <jsp:include page="/common/backend_common.jsp"/>
 </head>
 

@@ -45,9 +45,9 @@ public class SysDeptService {
 
     public void update(DeptParam param) {
         BeanValidator.check(param);
-        if(checkExist(param.getParentId(), param.getName(), param.getId())) {
-            throw new ParamException("name in the same level cannot be same");
-        }
+//        if(checkExist(param.getParentId(), param.getName(), param.getId())) {
+//            throw new ParamException("name in the same level cannot be same");
+//        }
 
         SysDept before = sysDeptMapper.selectByPrimaryKey(param.getId());
         Preconditions.checkNotNull(before, "待更新部门不存在");
