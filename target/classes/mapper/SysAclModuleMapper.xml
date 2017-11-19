@@ -154,7 +154,7 @@
         FROM sys_acl_module
         WHERE name = #{name}
         <if test="parentId != null">
-            parent_id = #{parentId}
+            AND parent_id = #{parentId}
         </if>
         <if test="id != null">
             AND id != #{id}

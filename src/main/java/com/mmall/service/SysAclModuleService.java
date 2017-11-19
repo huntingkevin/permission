@@ -13,6 +13,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
 
@@ -22,13 +23,14 @@ import java.util.List;
 @Service
 public class SysAclModuleService {
 
+    @Resource
     private SysAclModuleMapper sysAclModuleMapper;
 
     public void save(AclModuleParam param) {
         BeanValidator.check(param);
-//        if (checkExist(param.getParentId(), param.getName(), param.getId())) {
-//            throw new ParamException("name in the same level cannot be the same");
-//        }
+        if (checkExist(param.getParentId(), param.getName(), param.getId())) {
+            throw new ParamException("name in the same level cannot be the same");
+        }
         SysAclModule aclModule = SysAclModule.builder().name(param.getName())
                 .parentId(param.getParentId())
                 .seq(param.getSeq())

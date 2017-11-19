@@ -66,7 +66,10 @@
       <param-value>*.js,*.css,*.jpg,*.png,*.ico,*.gif,/sys/druid/*</param-value>
     </init-param>
   </filter>
-  
+  <filter-mapping>
+    <filter-name>druidWebStatFilter</filter-name>
+    <url-pattern>/druid</url-pattern>
+  </filter-mapping>
   <filter>
     <filter-name>loginFilter</filter-name>
     <filter-class>com.mmall.filter.LoginFilter</filter-class>
