@@ -466,7 +466,47 @@
         }
         
         function bindAclClick() {
-            
+            $(".acl-edit").click(function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                var aclId = $(this).attr("data-id");
+                $("#dialog-acl-form").dialog({
+                    model: true,
+                    title: "编辑权限",
+                    open: function (event, ui) {
+                        $(".ui-dialog-titlebar-close", $(this).parent()).hide();
+                        optionStr = "";
+                        recursiveRenderAclModuleSelect(aclModuleList, 1);
+                        $("#aclForm")[0].reset();
+                        $("#aclModuleSelectId").html(optionStr);
+                        var targetAcl = aclMap[aclId];
+                        if (targetAcl) {
+                            $("#aclId").val(aclId);
+                            $("#aclModuleSelectId").val(targetAcl.aclModuleId);
+                            $("#aclStatus").val(targetAcl.status);
+                            $("#aclType").val(targetAcl.type);
+                            $("#aclName").val(targetAcl.name);
+                            $("#aclUrl").val(targetAcl.url);
+                            $("#aclSeq").val(targetAcl.seq);
+                            $("#aclRemark").val(targetAcl.remark);
+                        }
+                    },
+                    buttons: {
+                        "更新": function (e) {
+                            e.preventDefault();
+                            updateAcl(false, function (data) {
+                                $("#dialog-acl-form").dialog("close");
+//                            loadAclList();
+                            }, function (data) {
+                                showMessage("编辑权限", data.msg, false);
+                            })
+                        },
+                        "取消": function () {
+                            $("#dialog-acl-form").dialog("close");
+                        }
+                    }
+                });
+            })
         }
 
         function updateAclModule(isCreate, successCallback, failCallback) {
@@ -495,7 +535,7 @@
                 type: 'POST',
                 success: function (result) {
                     if (result.ret) {
-//                        loadAclList();
+                        loadAclList(lastClickAclModuleId);
                         if (successCallback) {
                             successCallback(result);
                         }
