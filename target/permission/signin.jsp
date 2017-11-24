@@ -1,52 +1,43 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: ruhonglin
-  Date: 2017/11/14
-  Time: 下午4:41
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title><%@ page import="java.net.URLEncoder" %>
-        <%@ page import="org.apache.commons.lang3.StringUtils" %>
-        <%@ page language="java" pageEncoding="UTF-8" %>
-        <html lang="zh-CN">
-            <%
+<%@ page import="java.net.URLEncoder" %>
+<%@ page import="org.apache.commons.lang3.StringUtils" %>
+<%@ page language="java" pageEncoding="UTF-8" %>
+<html lang="zh-CN">
+<%
     String ret = request.getParameter("ret");
-    if(StringUtils.isNotBlank(ret)) {
+    if (StringUtils.isNotBlank(ret)) {
         ret = URLEncoder.encode(ret);
     } else {
         ret = "";
     }
 %>
-        <head>
-            <meta charset="utf-8">
-            <meta http-equiv="X-UA-Compatible" content="IE=edge">
-            <meta name="viewport" content="width=device-width, initial-scale=1">
-            <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
-            <meta name="description" content="">
-            <meta name="author" content="">
-            <link rel="icon" href="/favicon.ico">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="/favicon.ico">
 
-            <title>登陆</title>
+    <title>登陆</title>
 
-            <!-- Bootstrap core CSS -->
-            <link href="bootstrap3.3.5/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap core CSS -->
+    <link href="bootstrap3.3.5/css/bootstrap.min.css" rel="stylesheet">
 
-            <!-- Custom styles for this template -->
-            <link href="css/signin.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="css/signin.css" rel="stylesheet">
 
-            <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
-            <!--[if lt IE 9]><script src="js/ie8-responsive-file-warning.js"></script><![endif]-->
-            <script src="js/ie-emulation-modes-warning.js"></script>
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]>
+    <script src="js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="js/ie-emulation-modes-warning.js"></script>
 
-            <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-            <!--[if lt IE 9]>
-            <script src="js/html5shiv.min.js"></script>
-            <script src="js/respond.min.js"></script>
-            <![endif]-->
-        </head>
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.min.js"></script>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->
+</head>
 
 <body>
 
@@ -54,9 +45,10 @@
     <form class="form-signin" action="/login.page?ret=<%=ret%>" method="post">
         <h2 class="form-signin-heading">请登陆</h2>
         <label for="inputEmail" class="sr-only">邮箱/电话</label>
-        <input type="text" id="inputEmail" class="form-control" placeholder="Email/Telephone" name="username" required autofocus value="${username}">
+        <input type="text" id="inputEmail" class="form-control" placeholder="Email/Telephone" name="username" required
+               autofocus value="${username}">
         <label for="inputPassword" class="sr-only">密码</label>
-        <input type="password" id="inputPassword" class="form-control" placeholder="Password" name="password" required >
+        <input type="password" id="inputPassword" class="form-control" placeholder="Password" name="password" required>
         <div class="checkbox" style="color: red;">${error}</div>
         <button class="btn btn-lg btn-primary btn-block" type="submit">登 陆</button>
     </form>
