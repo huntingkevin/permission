@@ -1,10 +1,12 @@
 package com.mmall.controller;
 
+import com.google.common.collect.Maps;
 import com.mmall.beans.PageQuery;
 import com.mmall.common.JsonData;
-import com.mmall.param.AclModuleParam;
+import com.mmall.model.SysRole;
 import com.mmall.param.AclParam;
 import com.mmall.service.SysAclService;
+import com.mmall.service.SysRoleService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by ruhonglin on 2017/11/16.
@@ -23,6 +27,8 @@ public class SysAclControlloer {
 
     @Resource
     private SysAclService sysAclService;
+    @Resource
+    private SysRoleService sysRoleService;
 
     @RequestMapping("/save.json")
     @ResponseBody
@@ -42,5 +48,15 @@ public class SysAclControlloer {
     @ResponseBody
     public JsonData page(@RequestParam("aclModuleId") Integer aclModuleId, PageQuery pageQuery) {
         return JsonData.success(sysAclService.getPageByAclModuleId(aclModuleId, pageQuery));
+    }
+
+    @RequestMapping("acls.json")
+    @ResponseBody
+    public JsonData acls(@RequestParam("aclId") int aclId) {
+        Map<String, Object> map = Maps.newHashMap();
+        List<SysRole> roleList = sysRoleService.getRoleListByUserId(aclId);
+        map.put("roles", roleList);
+        map.put("users", sysRoleService.getUserListByRoleList(roleList));
+        return JsonData.success();
     }
 }

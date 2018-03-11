@@ -24,7 +24,7 @@ public class SysRoleAclService {
     @Resource
     private SysRoleAclMapper sysRoleAclMapper;
 
-    public void changRoleAcls(Integer roleId, List<Integer> aclIdList) {
+    public void changeRoleAcls(Integer roleId, List<Integer> aclIdList) {
         List<Integer> originAclIdList = sysRoleAclMapper.getAclIdListByRoleIdList(Lists.newArrayList(roleId));
         if (originAclIdList.size() == aclIdList.size()) {
             Set<Integer> originAclIdSet = Sets.newHashSet(originAclIdList);

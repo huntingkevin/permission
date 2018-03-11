@@ -13,6 +13,7 @@ import com.mmall.model.SysAcl;
 import com.mmall.model.SysAclModule;
 import com.mmall.model.SysDept;
 import com.mmall.util.LevelUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +25,7 @@ import java.util.stream.Collectors;
  * Created by ruhonglin on 2017/11/7.
  */
 @Service
+@Slf4j
 public class SysTreeService {
 
     @Resource
@@ -34,6 +36,18 @@ public class SysTreeService {
     private SysCoreService sysCoreService;
     @Resource
     private SysAclMapper sysAclMapper;
+
+    public List<AclModuleLevelDto> userAclTree(int userId) {
+        List<SysAcl> userAclList = sysCoreService.getUserAclList(userId);
+        List<AclDto> aclDtoList = Lists.newArrayList();
+        for (SysAcl acl : userAclList) {
+            AclDto dto = AclDto.adapt(acl);
+            dto.setHasAcl(true);
+            dto.setChecked(true);
+            aclDtoList.add(dto);
+        }
+        return aclListToTree(aclDtoList);
+    }
 
     public List<AclModuleLevelDto> roleTree(int roleId) {
         // 关键是把相关权限挂到权限树下
@@ -86,7 +100,7 @@ public class SysTreeService {
             List<AclDto> dtoList = (List<AclDto>) moduleIdAclMap.get(dto.getId());
             if (CollectionUtils.isNotEmpty(dtoList)) {
                 Collections.sort(dtoList, aclSeqComparor);
-                dto.setAclDtoList(dtoList);
+                dto.setAclList(dtoList);
             }
             bindAclWithOrder(dto.getAclModuleList(), moduleIdAclMap);
         }
@@ -101,7 +115,7 @@ public class SysTreeService {
         return aclModuleListToTree(dtoList);
     }
 
-    private List<AclModuleLevelDto> aclModuleListToTree(List<AclModuleLevelDto> dtoList) {
+    public List<AclModuleLevelDto> aclModuleListToTree(List<AclModuleLevelDto> dtoList) {
         if (CollectionUtils.isEmpty(dtoList)) {
             return Lists.newArrayList();
         }

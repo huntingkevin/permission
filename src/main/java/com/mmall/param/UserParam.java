@@ -36,7 +36,7 @@ public class UserParam {
     @NotNull(message = "status cannot be null")
     @Min(value = 0, message = "invalid user status")
     @Max(value = 2, message = "invalid user status")
-    private String status;
+    private Integer status;
 
     @Length(min = 0, max = 200, message = "remark should be less than 200 digits")
     private String remark;
